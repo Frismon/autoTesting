@@ -59,11 +59,8 @@ export function calcOrderTotal(
   return round2(afterDiscount + calcShipping(afterDiscount));
 }
 
-// ---------- Варіант 7: оцінка терміну доставки ----------
-
 export type Region = 'local' | 'west' | 'center' | 'east';
 
-/** Кількість робочих днів доставки: [звичайна, експрес]. */
 export const DELIVERY_DAYS: Record<
   Region,
   { standard: number; express: number }
@@ -74,15 +71,8 @@ export const DELIVERY_DAYS: Record<
   east: { standard: 5, express: 3 }, // східні та південні області
 };
 
-/** Замовлення, оформлені від цієї години, відправляються наступного дня. */
 export const CUTOFF_HOUR = 14;
 
-/**
- * Оцінює термін доставки в робочих днях.
- * region — один із чотирьох регіонів; isExpress — прискорена доставка;
- * orderHour — година оформлення замовлення (0–23, за замовчуванням 12).
- * Винятки: UNKNOWN_REGION, INVALID_EXPRESS_FLAG, INVALID_ORDER_HOUR.
- */
 export function estimateDelivery(
   region: Region,
   isExpress: boolean,

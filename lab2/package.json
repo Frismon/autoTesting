@@ -1,7 +1,7 @@
 {
   "name": "qa-automation",
   "version": "1.0.0",
-  "description": "Lab 1: TypeScript + Vitest environment (variant 7)",
+  "description": "Lab 2: TypeScript + Vitest environment (variant 7)",
   "main": "index.js",
   "scripts": {
     "test": "vitest run",
