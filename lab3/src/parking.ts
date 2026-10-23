@@ -8,5 +8,8 @@ export function calcParkingFee(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   options: ParkingOptions = {},
 ): number {
-  throw new Error('INVALID_DURATION');
+  if (!Number.isInteger(minutes) || minutes < 0) {
+    throw new Error('INVALID_DURATION');
+  }
+  return 0;
 }
