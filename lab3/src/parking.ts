@@ -1,0 +1,12 @@
+export interface ParkingOptions {
+  night?: boolean;
+  weekend?: boolean;
+}
+
+export function calcParkingFee(
+  minutes: number,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  options: ParkingOptions = {},
+): number {
+  throw new Error('INVALID_DURATION');
+}
