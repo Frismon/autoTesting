@@ -8,6 +8,10 @@ const FIRST_HOUR_MINUTES = 60;
 const FIRST_HOUR_FEE = 30;
 const EXTRA_HOUR_FEE = 20;
 const DAILY_CAP = 200;
+const NIGHT_RATE = 0.5;
+const WEEKEND_RATE = 0.8;
+
+const round2 = (n: number): number => Math.round(n * 100) / 100;
 
 function assertValidDuration(minutes: number): void {
   if (!Number.isInteger(minutes) || minutes < 0) {
@@ -27,9 +31,9 @@ export function calcBaseFee(minutes: number): number {
 
 export function applyRates(fee: number, options: ParkingOptions): number {
   let result = fee;
-  if (options.night) result = result / 2;
-  if (options.weekend) result = result * 0.8;
-  return Math.round(result * 100) / 100;
+  if (options.night) result *= NIGHT_RATE;
+  if (options.weekend) result *= WEEKEND_RATE;
+  return round2(result);
 }
 
 export function calcParkingFee(
