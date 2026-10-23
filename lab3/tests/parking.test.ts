@@ -9,4 +9,12 @@ describe('calcParkingFee', () => {
   it.each([0, 1, 15])('перші 15 хвилин безкоштовні: %i', (minutes) => {
     expect(calcParkingFee(minutes)).toBe(0);
   });
+
+  it.each([
+    { minutes: 15, expected: 0 },
+    { minutes: 16, expected: 30 },
+    { minutes: 60, expected: 30 },
+  ])('тривалість $minutes → $expected', ({ minutes, expected }) => {
+    expect(calcParkingFee(minutes)).toBe(expected);
+  });
 });
