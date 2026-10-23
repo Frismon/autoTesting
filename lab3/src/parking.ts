@@ -29,7 +29,7 @@ export function applyRates(fee: number, options: ParkingOptions): number {
   let result = fee;
   if (options.night) result = result / 2;
   if (options.weekend) result = result * 0.8;
-  return result;
+  return Math.round(result * 100) / 100;
 }
 
 export function calcParkingFee(
