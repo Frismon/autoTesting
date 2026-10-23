@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { calcParkingFee } from '../src/parking';
+import { applyRates, calcParkingFee } from '../src/parking';
 
 describe('calcParkingFee', () => {
   it.each([-1, -60, 10.5])('відхиляє тривалість %s', (minutes) => {
@@ -48,5 +48,21 @@ describe('calcParkingFee', () => {
     { minutes: 600, opts: { night: true, weekend: true }, expected: 80 },
   ])('вихідний: $minutes $opts → $expected', ({ minutes, opts, expected }) => {
     expect(calcParkingFee(minutes, opts)).toBeCloseTo(expected, 2);
+  });
+});
+
+describe('applyRates', () => {
+  it('заокруглює результат до копійок', () => {
+    // 33 / 2 * 0.8 = 13.2 (без заокруглення — 13.200000000000001)
+    expect(applyRates(33, { night: true, weekend: true })).toBe(13.2);
+    // 101 * 0.8 = 80.8 (без заокруглення — 80.80000000000001)
+    expect(applyRates(101, { weekend: true })).toBe(80.8);
+  });
+
+  it('повна плата заокруглена до копійок', () => {
+    // 45 хв, ніч, вихідний: 30 / 2 * 0.8 = 12
+    expect(calcParkingFee(45, { night: true, weekend: true })).toBe(12);
+    // 121 хв, ніч, вихідний: 70 / 2 * 0.8 = 28
+    expect(calcParkingFee(121, { night: true, weekend: true })).toBe(28);
   });
 });
