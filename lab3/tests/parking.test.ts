@@ -17,4 +17,13 @@ describe('calcParkingFee', () => {
   ])('тривалість $minutes → $expected', ({ minutes, expected }) => {
     expect(calcParkingFee(minutes)).toBe(expected);
   });
+
+  it.each([
+    { minutes: 61, expected: 50 },
+    { minutes: 120, expected: 50 },
+    { minutes: 121, expected: 70 },
+    { minutes: 180, expected: 70 },
+  ])('наступні години: $minutes → $expected', ({ minutes, expected }) => {
+    expect(calcParkingFee(minutes)).toBe(expected);
+  });
 });
