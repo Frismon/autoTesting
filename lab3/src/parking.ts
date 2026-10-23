@@ -11,18 +11,21 @@ const DAILY_CAP = 200;
 
 export function calcParkingFee(
   minutes: number,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   options: ParkingOptions = {},
 ): number {
   if (!Number.isInteger(minutes) || minutes < 0) {
     throw new Error('INVALID_DURATION');
   }
   if (minutes <= FREE_MINUTES) return 0;
-  if (minutes <= FIRST_HOUR_MINUTES) return FIRST_HOUR_FEE;
 
-  const extraHours = Math.ceil(
-    (minutes - FIRST_HOUR_MINUTES) / FIRST_HOUR_MINUTES,
-  );
-  const fee = FIRST_HOUR_FEE + extraHours * EXTRA_HOUR_FEE;
-  return Math.min(fee, DAILY_CAP);
+  let fee = FIRST_HOUR_FEE;
+  if (minutes > FIRST_HOUR_MINUTES) {
+    const extraHours = Math.ceil(
+      (minutes - FIRST_HOUR_MINUTES) / FIRST_HOUR_MINUTES,
+    );
+    fee = Math.min(FIRST_HOUR_FEE + extraHours * EXTRA_HOUR_FEE, DAILY_CAP);
+  }
+
+  if (options.night) fee = fee / 2;
+  return fee;
 }
