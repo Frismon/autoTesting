@@ -31,9 +31,12 @@ describe('calcParkingFee', () => {
     { minutes: 540, expected: 190 },
     { minutes: 600, expected: 200 },
     { minutes: 1440, expected: 200 },
-  ])('обмеження добової плати: $minutes → $expected', ({ minutes, expected }) => {
-    expect(calcParkingFee(minutes)).toBe(expected);
-  });
+  ])(
+    'обмеження добової плати: $minutes → $expected',
+    ({ minutes, expected }) => {
+      expect(calcParkingFee(minutes)).toBe(expected);
+    },
+  );
 
   it.each([
     { minutes: 60, expected: 15 },
