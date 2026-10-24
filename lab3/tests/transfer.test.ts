@@ -42,4 +42,14 @@ describe('calcTransferFee', () => {
       expect(() => calcTransferFee(amount)).toThrow('VERIFICATION_REQUIRED');
     },
   );
+
+  it.each([
+    { amount: 1234.56, expected: 12.35 },
+    { amount: 1234.44, expected: 12.34 },
+    { amount: 1000.49, expected: 10 },
+    { amount: 1000.5, expected: 10.01 },
+    { amount: 501.5, expected: 5.02 },
+  ])('заокруглює комісію до копійок: $amount → $expected', ({ amount, expected }) => {
+    expect(calcTransferFee(amount)).toBe(expected);
+  });
 });
