@@ -22,4 +22,13 @@ describe('calcTransferFee', () => {
   ])('мінімальна комісія 5 грн: $amount → $expected', ({ amount, expected }) => {
     expect(calcTransferFee(amount)).toBe(expected);
   });
+
+  it.each([
+    { amount: 14999, expected: 149.99 },
+    { amount: 15000, expected: 150 },
+    { amount: 15001, expected: 150 },
+    { amount: 40000, expected: 150 },
+  ])('максимальна комісія 150 грн: $amount → $expected', ({ amount, expected }) => {
+    expect(calcTransferFee(amount)).toBe(expected);
+  });
 });
