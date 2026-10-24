@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function calcTransferFee(amount: number): number {
-  throw new Error('INVALID_AMOUNT');
+  if (amount <= 0) throw new Error('INVALID_AMOUNT');
+  return amount / 100;
 }
