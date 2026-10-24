@@ -10,7 +10,14 @@ const clamp = (value: number, min: number, max: number): number =>
   Math.min(Math.max(value, min), max);
 
 function assertTransferable(amount: number): void {
-  if (amount <= 0) throw new Error('INVALID_AMOUNT');
+  if (
+    typeof amount !== 'number' ||
+    !Number.isFinite(amount) ||
+    amount <= 0 ||
+    Math.abs(amount * 100 - Math.round(amount * 100)) > 1e-6
+  ) {
+    throw new Error('INVALID_AMOUNT');
+  }
   if (amount > VERIFICATION_LIMIT) throw new Error('VERIFICATION_REQUIRED');
 }
 
