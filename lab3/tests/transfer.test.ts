@@ -13,4 +13,13 @@ describe('calcTransferFee', () => {
   ])('комісія 1 %: $amount → $expected', ({ amount, expected }) => {
     expect(calcTransferFee(amount)).toBe(expected);
   });
+
+  it.each([
+    { amount: 0.01, expected: 5 },
+    { amount: 499, expected: 5 },
+    { amount: 500, expected: 5 },
+    { amount: 501, expected: 5.01 },
+  ])('мінімальна комісія 5 грн: $amount → $expected', ({ amount, expected }) => {
+    expect(calcTransferFee(amount)).toBe(expected);
+  });
 });
