@@ -13,6 +13,7 @@ function assertTransferable(amount: number): void {
 
 export function calcTransferFee(amount: number): number {
   assertTransferable(amount);
-  const fee = (amount * FEE_PERCENT) / 100;
-  return clamp(fee, MIN_FEE, MAX_FEE);
+  const amountKop = Math.round(amount * 100);
+  const feeKop = Math.round((amountKop * FEE_PERCENT) / 100);
+  return clamp(feeKop, MIN_FEE * 100, MAX_FEE * 100) / 100;
 }
