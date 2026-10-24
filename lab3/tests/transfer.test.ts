@@ -31,4 +31,15 @@ describe('calcTransferFee', () => {
   ])('максимальна комісія 150 грн: $amount → $expected', ({ amount, expected }) => {
     expect(calcTransferFee(amount)).toBe(expected);
   });
+
+  it('сума рівно 50 000 грн ще не потребує перевірки', () => {
+    expect(calcTransferFee(50000)).toBe(150);
+  });
+
+  it.each([50000.01, 50001, 1000000])(
+    'сума %s понад 50 000 грн потребує додаткової перевірки',
+    (amount) => {
+      expect(() => calcTransferFee(amount)).toThrow('VERIFICATION_REQUIRED');
+    },
+  );
 });
