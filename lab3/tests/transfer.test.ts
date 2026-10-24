@@ -19,18 +19,24 @@ describe('calcTransferFee', () => {
     { amount: 499, expected: 5 },
     { amount: 500, expected: 5 },
     { amount: 501, expected: 5.01 },
-  ])('мінімальна комісія 5 грн: $amount → $expected', ({ amount, expected }) => {
-    expect(calcTransferFee(amount)).toBe(expected);
-  });
+  ])(
+    'мінімальна комісія 5 грн: $amount → $expected',
+    ({ amount, expected }) => {
+      expect(calcTransferFee(amount)).toBe(expected);
+    },
+  );
 
   it.each([
     { amount: 14999, expected: 149.99 },
     { amount: 15000, expected: 150 },
     { amount: 15001, expected: 150 },
     { amount: 40000, expected: 150 },
-  ])('максимальна комісія 150 грн: $amount → $expected', ({ amount, expected }) => {
-    expect(calcTransferFee(amount)).toBe(expected);
-  });
+  ])(
+    'максимальна комісія 150 грн: $amount → $expected',
+    ({ amount, expected }) => {
+      expect(calcTransferFee(amount)).toBe(expected);
+    },
+  );
 
   it('сума рівно 50 000 грн ще не потребує перевірки', () => {
     expect(calcTransferFee(50000)).toBe(150);
@@ -49,9 +55,12 @@ describe('calcTransferFee', () => {
     { amount: 1000.49, expected: 10 },
     { amount: 1000.5, expected: 10.01 },
     { amount: 501.5, expected: 5.02 },
-  ])('заокруглює комісію до копійок: $amount → $expected', ({ amount, expected }) => {
-    expect(calcTransferFee(amount)).toBe(expected);
-  });
+  ])(
+    'заокруглює комісію до копійок: $amount → $expected',
+    ({ amount, expected }) => {
+      expect(calcTransferFee(amount)).toBe(expected);
+    },
+  );
 
   it.each([NaN, Infinity, 100.001, '1000' as unknown as number])(
     'відхиляє некоректне значення суми %s',
