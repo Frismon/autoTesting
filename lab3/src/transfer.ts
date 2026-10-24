@@ -1,4 +1,8 @@
+const FEE_PERCENT = 1;
+const MIN_FEE = 5;
+
 export function calcTransferFee(amount: number): number {
   if (amount <= 0) throw new Error('INVALID_AMOUNT');
-  return Math.max(amount / 100, 5);
+  const fee = (amount * FEE_PERCENT) / 100;
+  return Math.max(fee, MIN_FEE);
 }
