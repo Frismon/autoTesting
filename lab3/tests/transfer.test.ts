@@ -52,4 +52,15 @@ describe('calcTransferFee', () => {
   ])('заокруглює комісію до копійок: $amount → $expected', ({ amount, expected }) => {
     expect(calcTransferFee(amount)).toBe(expected);
   });
+
+  it.each([NaN, Infinity, 100.001, '1000' as unknown as number])(
+    'відхиляє некоректне значення суми %s',
+    (amount) => {
+      expect(() => calcTransferFee(amount)).toThrow('INVALID_AMOUNT');
+    },
+  );
+
+  it.each([0.29, 100.01, 49999.99])('приймає суму з копійками %s', (amount) => {
+    expect(() => calcTransferFee(amount)).not.toThrow();
+  });
 });
