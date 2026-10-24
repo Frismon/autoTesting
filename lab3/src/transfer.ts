@@ -3,6 +3,9 @@ const MIN_FEE = 5;
 const MAX_FEE = 150;
 const VERIFICATION_LIMIT = 50000;
 
+const toKopecks = (uah: number): number => Math.round(uah * 100);
+const toUah = (kopecks: number): number => kopecks / 100;
+
 const clamp = (value: number, min: number, max: number): number =>
   Math.min(Math.max(value, min), max);
 
@@ -13,7 +16,6 @@ function assertTransferable(amount: number): void {
 
 export function calcTransferFee(amount: number): number {
   assertTransferable(amount);
-  const amountKop = Math.round(amount * 100);
-  const feeKop = Math.round((amountKop * FEE_PERCENT) / 100);
-  return clamp(feeKop, MIN_FEE * 100, MAX_FEE * 100) / 100;
+  const feeKop = Math.round((toKopecks(amount) * FEE_PERCENT) / 100);
+  return toUah(clamp(feeKop, toKopecks(MIN_FEE), toKopecks(MAX_FEE)));
 }
