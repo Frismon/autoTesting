@@ -6,6 +6,7 @@ export default defineConfig({
     environment: 'node', // тестуємо бізнес-логіку, DOM не потрібен
     include: ['tests/**/*.test.ts'], // раннер шукає тести лише тут
     setupFiles: ['tests/setup.ts'], // MSW: перехоплення мережі для всіх тестів
+    execArgv: ['--no-experimental-webstorage'], // Node 26: без попередження про localStorage від MSW
     coverage: {
       provider: 'v8', // вбудований у Node механізм вимірювання покриття
       reporter: ['text', 'html'], // вивід у термінал + звіт coverage/index.html
